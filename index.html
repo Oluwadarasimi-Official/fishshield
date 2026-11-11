@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FishShield — Micro-insurance for Fishermen</title>
+<meta name="description" content="FishShield — small weekly premiums, real cover for your boat, nets and catch. Built for Nigeria's artisanal fishing communities.">
+<link rel="stylesheet" href="styles.css">
+<script src="supabase-config.js"></script>
+<script src="fs-db.js"></script>
+</head>
+<body>
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo-mark">🛟</div>
+    <div class="brand"><b>FishShield</b><span>Micro-insurance • Fishermen</span></div>
+    <div class="wal-chip" id="walChip" style="display:none"><small>Wallet</small><b id="walChipBal">₦0</b></div>
+  </div>
+</header>
+
+<!-- AUTH -->
+<main class="wrap" id="view-auth">
+  <div class="hero glass" style="margin-top:22px">
+    <div class="eyebrow">NIMASA-BEAP • Track 11</div>
+    <h1>Small premiums.<br>Real cover for your boat, nets &amp; catch.</h1>
+    <p>FishShield protects artisanal fishermen in Lagos, Bayelsa, Rivers, Delta, Akwa Ibom and Ondo. Pay a little every week — if storms damage your boat or you lose your catch, we help you get back on the water.</p>
+    <span class="demo-note">Demo — no real money moves</span>
+  </div>
+  <div class="glass" style="padding:20px 18px; margin-top:14px">
+    <h2 class="sec-t" style="margin-top:0">Enter with your phone number</h2>
+    <p class="sec-s">No email, no password. Use the same phone number to come back to your wallet and policies.</p>
+    <div class="field"><label>Your name</label><input id="auName" placeholder="e.g. Emeka Okafor" autocomplete="name"></div>
+    <div class="field"><label>Phone number</label><input id="auPhone" placeholder="e.g. 08030000001" inputmode="tel" autocomplete="tel"></div>
+    <div class="field"><label>Community</label><input id="auCommunity" placeholder="e.g. Makoko"></div>
+    <div class="field"><label>State</label><select id="auState">
+      <option value="">Choose your state…</option>
+      <option>Lagos</option><option>Bayelsa</option><option>Rivers</option>
+      <option>Delta</option><option>Akwa Ibom</option><option>Ondo</option>
+    </select></div>
+    <button class="cta" id="authBtn" onclick="enterApp()">Enter FishShield →</button>
+    <p class="note">Underwriter: to be confirmed — your cooperative. Demo data only.</p>
+  </div>
+</main>
+
+<!-- HOME -->
+<main class="wrap hidden" id="view-home">
+  <div class="hero glass">
+    <div class="eyebrow" id="homeGreet">Welcome back</div>
+    <h1 id="homeName">FishShield</h1>
+    <p>Your cover, your wallet, your claims — all in one place.</p>
+    <span class="demo-note">Demo — no real money moves</span>
+  </div>
+
+  <div class="wallet glass">
+    <small>Wallet balance</small>
+    <div class="bal" id="walBal">₦0</div>
+    <div class="topup-row">
+      <button class="topup" onclick="topUp(5000)">+ ₦5,000</button>
+      <button class="topup" onclick="topUp(10000)">+ ₦10,000</button>
+      <button class="topup" onclick="topUp(20000)">+ ₦20,000</button>
+    </div>
+    <p class="note" style="text-align:left; margin:10px 0 0">Demo top-up — simulated, no real payment.</p>
+  </div>
+
+  <h2 class="sec-t">Cover plans</h2>
+  <p class="sec-s">Weekly premiums. Cover lasts 4 weeks from the day you buy.</p>
+  <div id="planList"></div>
+</main>
+
+<!-- PLANS -->
+<main class="wrap hidden" id="view-plans">
+  <h2 class="sec-t">Cover plans</h2>
+  <p class="sec-s">Choose a plan. Premium is taken from your wallet once a week.</p>
+  <div id="planList2"></div>
+</main>
+
+<!-- POLICIES -->
+<main class="wrap hidden" id="view-policies">
+  <h2 class="sec-t">My policies</h2>
+  <p class="sec-s">Active cover, with policy codes and expiry dates.</p>
+  <div id="policyList"></div>
+</main>
+
+<!-- CLAIMS -->
+<main class="wrap hidden" id="view-claims">
+  <h2 class="sec-t">My claims</h2>
+  <p class="sec-s">File a claim on an active policy and track it here.</p>
+  <button class="cta" onclick="openClaimSheet()">+ File a claim</button>
+  <div id="claimList" style="margin-top:14px"></div>
+</main>
+
+<!-- WALLET -->
+<main class="wrap hidden" id="view-wallet">
+  <h2 class="sec-t">Wallet</h2>
+  <p class="sec-s">Every top-up, premium and payout — demo transactions only.</p>
+  <div class="wallet glass"><small>Wallet balance</small><div class="bal" id="walBal2">₦0</div></div>
+  <div class="glass" style="padding:8px 16px; margin-top:12px" id="txList"></div>
+</main>
+
+<nav class="bottom"><div class="nav-in">
+  <button data-v="home" class="on" onclick="showView('home')"><span class="ico">🏠</span>Home</button>
+  <button data-v="plans" onclick="showView('plans')"><span class="ico">🛡️</span>Plans</button>
+  <button data-v="policies" onclick="showView('policies')"><span class="ico">📋</span>Policies</button>
+  <button data-v="claims" onclick="showView('claims')"><span class="ico">📸</span>Claims</button>
+  <button data-v="wallet" onclick="showView('wallet')"><span class="ico">👛</span>Wallet</button>
+</div></nav>
+
+<div id="sheetRoot"></div>
+<div id="toastRoot"></div>
+<p class="foot" style="position:relative; z-index:1">FishShield • Built by the Nexora Guild<br>Lead: <b>Kolade Israel</b> • Demo — no real money moves</p>
+<a class="dash-link" href="dashboard.html">Cooperative staff? Open the <b>dashboard →</b></a>
+<script src="app.js"></script>
+</body>
+</html>

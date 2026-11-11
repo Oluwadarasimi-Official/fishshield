@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FishShield Dashboard — Cooperative</title>
+<meta name="description" content="FishShield cooperative dashboard — members, premiums and claims.">
+<link rel="stylesheet" href="styles.css">
+<script src="supabase-config.js"></script>
+<script src="fs-db.js"></script>
+</head>
+<body>
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo-mark">🛟</div>
+    <div class="brand"><b>FishShield</b><span>Cooperative dashboard</span></div>
+    <div class="wal-chip" id="dashMode" style="display:none"><small>Mode</small><b id="dashModeTxt">Live</b></div>
+  </div>
+</header>
+
+<!-- PIN GATE -->
+<main class="wrap" id="view-pin">
+  <div class="glass pin-box">
+    <div style="font-size:44px">🔐</div>
+    <h2>Cooperative dashboard</h2>
+    <p>Enter the staff PIN to see members, premiums and claims.</p>
+    <div class="field"><label style="text-align:left">Staff PIN</label>
+      <input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+    </div>
+    <button class="cta" onclick="unlock()">Unlock dashboard</button>
+    <p class="note">Demo PIN: <b style="color:var(--ink)">1234</b> — change it before going live.</p>
+  </div>
+</main>
+
+<!-- DASHBOARD -->
+<main class="wrap hidden" id="view-dash">
+  <h2 class="sec-t" style="margin-top:16px">Today at a glance</h2>
+  <p class="sec-s">Members, premiums and claims — updated live.</p>
+
+  <div class="stats">
+    <div class="glass stat"><small>Members</small><b id="stMembers">0</b><span>registered fishermen</span></div>
+    <div class="glass stat"><small>Premiums today</small><b id="stToday">₦0</b><span>collected today</span></div>
+    <div class="glass stat"><small>Premiums total</small><b id="stTotal">₦0</b><span>all time</span></div>
+    <div class="glass stat"><small>Pending claims</small><b id="stPending">0</b><span>waiting for review</span></div>
+  </div>
+
+  <h2 class="sec-t">Claims queue</h2>
+  <p class="sec-s">Approve to pay out to the fisherman's wallet, or reject with a note.</p>
+  <div id="claimQueue"></div>
+
+  <h2 class="sec-t">Members</h2>
+  <p class="sec-s">Fishermen, their cover and wallet balance.</p>
+  <div id="memberList"></div>
+
+  <h2 class="sec-t">Recent activity</h2>
+  <div class="glass" style="padding:8px 16px" id="activityList"></div>
+
+  <p class="foot">FishShield • Built by the Nexora Guild<br>Lead: <b>Kolade Israel</b> • Demo — no real money moves</p>
+  <a class="dash-link" href="index.html">← Back to the <b>fisherman app</b></a>
+  <button class="cta ghost" style="margin-top:10px" onclick="lock()">Lock dashboard</button>
+</main>
+
+<div id="sheetRoot"></div>
+<div id="toastRoot"></div>
+<script src="dashboard.js"></script>
+</body>
+</html>
