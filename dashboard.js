@@ -78,7 +78,7 @@ function renderClaims() {
   el.innerHTML = CLAIMS.map(function (c) {
     var photo = c.photo_data
       ? '<img class="thumb" src="' + c.photo_data + '" alt="Claim photo">'
-      : '<div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:rgba(255,255,255,.08)">📷</div>';
+      : '<div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#eaf1ff">📷</div>';
     return '<div class="glass item"><div class="claim-row">' + photo +
       '<div class="cb"><div class="row1"><b>' + esc(fisherName(c.fisherman_id)) + '</b>' +
       '<span class="badge b-' + c.status + '">' + c.status + '</span></div>' +

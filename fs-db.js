@@ -114,7 +114,7 @@
     async getPlans() {
       if (await isOnline()) {
         try {
-          var rows = await rest('fs_plans', { query: '?select=*&eq=active&order=sort' });
+          var rows = await rest('fs_plans', { query: '?select=*&active=eq.true&order=sort' });
           if (rows && rows.length) return rows;
         } catch (e) { ONLINE = false; }
       }
